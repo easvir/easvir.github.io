@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="开篇的碎碎念：第一次看到这张图时还在学CSS，JS以其申必的执行机制狂暴轰入我的逻辑体系。现在看完视频回过头来啃红宝书时偶然想起这张图，就想着搞个梗图解析系列。其实是基础不牢没啥积淀只能抖机灵 1、 typeof NaNStackOverflow Link  It means Not a Number. It is not a peculiarity of javascript but comm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS梗图（1）">
+<meta property="og:url" content="http://example.com/2021/02/28/JsMeme/index.html">
+<meta property="og:site_name" content="easvir">
+<meta property="og:description" content="开篇的碎碎念：第一次看到这张图时还在学CSS，JS以其申必的执行机制狂暴轰入我的逻辑体系。现在看完视频回过头来啃红宝书时偶然想起这张图，就想着搞个梗图解析系列。其实是基础不牢没啥积淀只能抖机灵 1、 typeof NaNStackOverflow Link  It means Not a Number. It is not a peculiarity of javascript but comm">
+<meta property="og:locale">
+<meta property="og:image" content="https://i.imgur.com/XUZuG0M.png">
+<meta property="og:image" content="https://i.imgur.com/N6ALX7E.png">
+<meta property="og:image" content="https://i.imgur.com/ViPiU0t.png">
+<meta property="og:image" content="https://i.imgur.com/Ii024Ci.png">
+<meta property="og:image" content="https://i.imgur.com/kk3TVaf.png">
+<meta property="og:image" content="https://i.imgur.com/Kq5PhJn.png">
+<meta property="og:image" content="https://i.imgur.com/wZhluwl.png">
+<meta property="og:image" content="https://i.imgur.com/CZCrcMy.png">
+<meta property="og:image" content="https://i.imgur.com/roWdTRq.png">
+<meta property="og:image" content="https://i.imgur.com/hQYn9Gm.png">
+<meta property="og:image" content="https://i.imgur.com/My3uPxW.png">
+<meta property="og:image" content="https://i.imgur.com/K6cZP1b.png">
+<meta property="og:image" content="https://i.imgur.com/Do8EeSw.png">
+<meta property="article:published_time" content="2021-02-28T06:53:45.000Z">
+<meta property="article:modified_time" content="2021-03-01T04:46:43.208Z">
+<meta property="article:author" content="东木野虚拟姬">
+<meta property="article:tag" content="meme">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/XUZuG0M.png">
+
+<link rel="canonical" href="http://example.com/2021/02/28/JsMeme/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>JS梗图（1） | easvir</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">easvir</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/28/JsMeme/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="东木野虚拟姬">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="easvir">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JS梗图（1）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-02-28 14:53:45" itemprop="dateCreated datePublished" datetime="2021-02-28T14:53:45+08:00">2021-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-01 12:46:43" itemprop="dateModified" datetime="2021-03-01T12:46:43+08:00">2021-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/FrontEnd/" itemprop="url" rel="index"><span itemprop="name">FrontEnd</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img src="https://i.imgur.com/XUZuG0M.png"></p>
+<p><strong>开篇的碎碎念：</strong><br>第一次看到这张图时还在学CSS，JS以其申必的执行机制狂暴轰入我的逻辑体系。现在看完视频回过头来啃红宝书时偶然想起这张图，就想着搞个梗图解析系列。<br><del>其实是基础不牢没啥积淀只能抖机灵</del><br><br></p>
+<h3 id="1、-typeof-NaN"><a href="#1、-typeof-NaN" class="headerlink" title="1、 typeof NaN"></a>1、 typeof NaN</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2801601/why-does-typeof-nan-return-number">StackOverflow Link</a><br><img src="https://i.imgur.com/N6ALX7E.png"></p>
+<blockquote>
+<p>It means Not a Number. It is not a peculiarity of javascript but common computer science principle.</p>
+</blockquote>
+<p>挖个脑洞：这样是否能将<strong>NaN之于Number</strong>类比为<strong>false之于Boolean</strong>？<br><br></p>
+<h3 id="2、-9999999999999999"><a href="#2、-9999999999999999" class="headerlink" title="2、 9999999999999999"></a>2、 9999999999999999</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/8907666/why-is-the-double-parsedouble-making-9999999999999999-to-10000000000000000?rq=1">StackOverflow Link</a><br><img src="https://i.imgur.com/ViPiU0t.png"><br>这个回答相比于它的上一个回答更加直观，16个9转换为二进制后尾数域不够用，于是将其进位到最接近的双精度值。<br><br></p>
+<h3 id="4、-0-1-0-2-0-3"><a href="#4、-0-1-0-2-0-3" class="headerlink" title="4、 0.1+0.2==0.3"></a>4、 0.1+0.2==0.3</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/588004/is-floating-point-math-broken">StackOverflow Link</a><br><img src="https://i.imgur.com/Ii024Ci.png"><br>也是浮点数精度的问题，用二进制表示十进制小数时会有精度损失。<br><br></p>
+<h3 id="3、-0-1-0-5-0-6"><a href="#3、-0-1-0-5-0-6" class="headerlink" title="3、 0.1+0.5==0.6"></a>3、 0.1+0.5==0.6</h3><p>同4。<br>因为0.5=2<sup>-1</sup>，0.1+0.5和0.6有相同的精度损失。<br><del>所以标号顺序并没有乱（确信</del><br><br></p>
+<h3 id="5、-Math-max"><a href="#5、-Math-max" class="headerlink" title="5、 Math.max()"></a>5、 Math.max()</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math/max">MDN Link</a><br><img src="https://i.imgur.com/kk3TVaf.png"></p>
+<h3 id="6、-Math-min"><a href="#6、-Math-min" class="headerlink" title="6、 Math.min()"></a>6、 Math.min()</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math/min">MDN Link</a><br><img src="https://i.imgur.com/Kq5PhJn.png"></p>
+<p>挖个脑洞：规则确实是这么写的，但是为什么要这样规定呢？会不会和“初始化”有关？即任何参数为Number的max()调用返回结果都大于无参的缺省调用，min()同理。<br>这和typeof Infinity的返回结果（Number）也相符。<br><br></p>
+<h3 id="7、"><a href="#7、" class="headerlink" title="7、 [] + []"></a>7、 [] + []</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9032856/what-is-the-explanation-for-these-bizarre-javascript-behaviours-mentioned-in-the">StackOverflow Link</a><br><img src="https://i.imgur.com/wZhluwl.png"></p>
+<h3 id="8、"><a href="#8、" class="headerlink" title="8、 [] + {}"></a>8、 [] + {}</h3><p>同7<br><img src="https://i.imgur.com/CZCrcMy.png"></p>
+<h3 id="9、"><a href="#9、" class="headerlink" title="9、 {} + []"></a>9、 {} + []</h3><p>同7<br><img src="https://i.imgur.com/roWdTRq.png"></p>
+<p>这三个要合起来聊，这里就得提到这篇文章 <a target="_blank" rel="noopener" href="https://2ality.com/2012/01/object-plus-object.html">What is {} + {} in JavaScript?</a><br>在第一节中提到：</p>
+<blockquote>
+<p>The plus operator performs three kinds of conversion: It converts values to primitives, numbers and strings.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/conflicting/Web/JavaScript/Reference/Operators#%E5%8A%A0%E6%B3%95">加法运算符的作用是数值求和，或者字符串拼接</a>，而JS又不像C++一样可以进行运算符重载，因此在进行对象之间的加法时就要将对象进行转换，第一步就是调用ToPrimitive()尝试将对象转换为基本类型。</p>
+<blockquote>
+<p>The following steps are performed to convert a value input (§9.1):</p>
+<ol>
+<li>If input is primitive, return it as is.</li>
+<li>Otherwise, input is an object. Call obj.valueOf(). If the result is primitive, return it.</li>
+<li>Otherwise, call obj.toString(). If the result is a primitive, return it.</li>
+<li>Otherwise, throw a TypeError.</li>
+</ol>
+</blockquote>
+<p>当获取到基本类型后，就尝试将其转换为字符串或数字。</p>
+<p><img src="https://i.imgur.com/hQYn9Gm.png"><br><img src="https://i.imgur.com/My3uPxW.png"></p>
+<p>由此可以分析789的转换过程了。</p>
+<p>7、</p>
+<blockquote>
+<p>Converting [] to a primitive first tries valueOf() which returns the array itself (this):</p>
+</blockquote>
+<pre><code>&gt; var arr = [];
+&gt; arr.valueOf() === arr
+true
+</code></pre>
+<blockquote>
+<p>As that result is not a primitive, toString() is called next and returns the empty string (which is a primitive). Therefore, the result of [] + [] is the concatenation of two empty strings.</p>
+</blockquote>
+<p>首先调用valueOf()，空数组和空对象的返回值都是其本身，于是下一步转换为字符串，空数组返回空字符串，两者拼接，返回空字符串。</p>
+<p>8、空对象转换为字符串是<code>&#39;[object Object]&#39;</code>，与空字符串拼接返回<code>&#39;[object Object]&#39;</code>。</p>
+<p>9、</p>
+<blockquote>
+<p>This is interpreted as a code block followed by +[]. The following expressions are equivalent:</p>
+</blockquote>
+<blockquote>
+<p>   +[]<br>    Number([])<br>    Number([].toString())  // [].valueOf() isn’t primitive<br>    Number(“”)<br>    0</p>
+</blockquote>
+<p>这里将空对象解释为空的代码块跳过执行，返回的内容为<code>+[]</code>，将空字符串转换为数字，返回0。</p>
+<p>在这里8和9是不同的，当添加括号后<code>(&#123;&#125;+[])</code>和<code>([]+&#123;&#125;)</code>返回值一致，都是<code>&#39;[object Object]&#39;</code>，原因就是没有括号时导致前置的花括号被解释为空代码块。</p>
+<p>此处还有一个字符串的转换要分析，放到后面一块讲。<br><br></p>
+<h3 id="10、-true-true-true-3"><a href="#10、-true-true-true-3" class="headerlink" title="10、 true+true+true===3"></a>10、 true+true+true===3</h3><h3 id="11、-true-true"><a href="#11、-true-true" class="headerlink" title="11、 true-true"></a>11、 true-true</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/20555321/javascript-adding-booleans">StackOverflow Link</a><br><img src="https://i.imgur.com/K6cZP1b.png"></p>
+<p>结合前面的结论可知，Boolean的加减法最终被转化为数字。<br>（一开始我是从C++的值计算去理解的，结论也一样，但忽略了加减法的条件）<br><br></p>
+<h3 id="12、-true-1"><a href="#12、-true-1" class="headerlink" title="12、 true==1"></a>12、 true==1</h3><h3 id="13、-true-1"><a href="#13、-true-1" class="headerlink" title="13、 true===1"></a>13、 true===1</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Equality_comparisons_and_sameness">MDN Link</a></p>
+<blockquote>
+<p>JavaScript提供三种不同的值比较操作：<br>-严格相等比较 (也被称作”strict equality”, “identity”, “triple equals”)，使用 === ,<br>-抽象相等比较 (“loose equality”，”double equals”) ，使用 ==<br>-以及 Object.is （ECMAScript 2015/ ES6 新特性）</p>
+</blockquote>
+<p><code>==</code>比<code>===</code>多了一步可能的类型转换。</p>
+<blockquote>
+<p>在 ES2015 以前，你可能会说双等和三等是“扩展”的关系。比如有人会说双等是三等的扩展版，因为他处理三等所做的，还做了类型转换。例如 6 == “6” 。反之另一些人可能会说三等是双等的扩展，因为他还要求两个参数的类型相同，所以增加了更多的限制。怎样理解取决于你怎样看待这个问题。<br><br></p>
+</blockquote>
+<h3 id="14、-length"><a href="#14、-length" class="headerlink" title="14、 (!+[]+[]+![]).length"></a>14、 (!+[]+[]+![]).length</h3><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51010468/why-console-log-length-gives-9">StackOverflow Link</a><br><img src="https://i.imgur.com/Do8EeSw.png"><br>很难不说离谱……<br><br></p>
+<h3 id="15、-9-”1”"><a href="#15、-9-”1”" class="headerlink" title="15、 9+”1”"></a>15、 9+”1”</h3><p><a target="_blank" rel="noopener" href="http://www.ecma-international.org/ecma-262/6.0/#sec-addition-operator-plus-runtime-semantics-evaluation">ECMA Link</a><br>这里直接参考ECMA规范。</p>
+<blockquote>
+<ol start="11">
+<li>If Type(lprim) is String <strong>or</strong> Type(rprim) is String, then:<br>a.Let lstr be ToString(lprim).<br>b.ReturnIfAbrupt(lstr).<br>c.Let rstr be ToString(rprim).<br>d.ReturnIfAbrupt(rstr).<br>e.Return the String that is the result of concatenating lstr and rstr.</li>
+</ol>
+</blockquote>
+<p>由此可以看出，在加法中，字符串拼接拥有更高的优先级，这也说明为什么<code>[]+[]</code>的结果是<code>&quot;&quot;</code>而不是<code>0</code>。<br><br></p>
+<h3 id="16、-91-“1”"><a href="#16、-91-“1”" class="headerlink" title="16、 91-“1”"></a>16、 91-“1”</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/conflicting/Web/JavaScript/Reference/Operators#%E5%87%8F%E6%B3%95_-">减法运算符使两个操作数相减，结果是它们的差值</a>，被减数为非数值的减法会直接返回NaN。<br><br></p>
+<h3 id="17、-0"><a href="#17、-0" class="headerlink" title="17、 []==0"></a>17、 []==0</h3><p>再次结合上面的结论，易知空数组先转换为空字符串，再从空字符串转换为0。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/meme/" rel="tag"># meme</a>
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81-typeof-NaN"><span class="nav-number">1.</span> <span class="nav-text">1、 typeof NaN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81-9999999999999999"><span class="nav-number">2.</span> <span class="nav-text">2、 9999999999999999</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81-0-1-0-2-0-3"><span class="nav-number">3.</span> <span class="nav-text">4、 0.1+0.2&#x3D;&#x3D;0.3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81-0-1-0-5-0-6"><span class="nav-number">4.</span> <span class="nav-text">3、 0.1+0.5&#x3D;&#x3D;0.6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81-Math-max"><span class="nav-number">5.</span> <span class="nav-text">5、 Math.max()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81-Math-min"><span class="nav-number">6.</span> <span class="nav-text">6、 Math.min()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81"><span class="nav-number">7.</span> <span class="nav-text">7、 [] + []</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8%E3%80%81"><span class="nav-number">8.</span> <span class="nav-text">8、 [] + {}</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9%E3%80%81"><span class="nav-number">9.</span> <span class="nav-text">9、 {} + []</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10%E3%80%81-true-true-true-3"><span class="nav-number">10.</span> <span class="nav-text">10、 true+true+true&#x3D;&#x3D;&#x3D;3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11%E3%80%81-true-true"><span class="nav-number">11.</span> <span class="nav-text">11、 true-true</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12%E3%80%81-true-1"><span class="nav-number">12.</span> <span class="nav-text">12、 true&#x3D;&#x3D;1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13%E3%80%81-true-1"><span class="nav-number">13.</span> <span class="nav-text">13、 true&#x3D;&#x3D;&#x3D;1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14%E3%80%81-length"><span class="nav-number">14.</span> <span class="nav-text">14、 (!+[]+[]+![]).length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15%E3%80%81-9-%E2%80%9D1%E2%80%9D"><span class="nav-number">15.</span> <span class="nav-text">15、 9+”1”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16%E3%80%81-91-%E2%80%9C1%E2%80%9D"><span class="nav-number">16.</span> <span class="nav-text">16、 91-“1”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17%E3%80%81-0"><span class="nav-number">17.</span> <span class="nav-text">17、 []&#x3D;&#x3D;0</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="东木野虚拟姬"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">东木野虚拟姬</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/easvir" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;easvir" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/easvir@outlook.com" title="E-Mail → easvir@outlook.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class=""></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">东木野虚拟姬</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
